@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <title>Spotify</title>
+    <link rel="icon" type="image/gif/png" href="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+</head>
+
+</style>
+
+<body>
+    <section class="mt-5" style="overflow: hidden;">
+
+        <div class="container h-50">
+
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-3 px-md-2 float-center">Search Songs</h3>
+                    <form class="px-md-2" method="POST" action="/spotify/search">
+
+                        <div class="form-floating mb-3">
+                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="Search">
+                        </div>
+                        <span>
+                            <input type="checkbox" name='type[]' value="albums"> Album
+                            <input type="checkbox" name='type[]' value="artists"> Artists
+                            <input type="checkbox" name='type[]' value="playlists"> PlayLists
+                            <input type="checkbox" name='type[]' value="tracks"> Tracks
+                            <input type="checkbox" name='type[]' value="shows"> Shows
+                            <input type="checkbox" name='type[]' value="episodes"> Episodes
+                        </span><br>
+
+
+                        <input type="submit" value="Search" name="search" class="btn btn-primary mt-2">
+                </div>
+                </form>
+            </div>
+        </div>
+
+    </section>
+    <?php
+    error_reporting(0);
+    // die($count);
+    if ($response) {
+        $html = '';
+        foreach ($response as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["album"]["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["album"]["name"] . '</span><br>
+                                <span style=" font-size: x-large;">Release date: ' . $v1['album']['release_date'] . '</span><br>
+                                <span style=" font-size: x-large;">Artist: ' . $v1['album']['artists'][0]['name'] . '</span><br>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+
+    if ($response_album) {
+        echo '<h3>Albums</h3>';
+        $html = '';
+        foreach ($response_album as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["name"] . '</span><br>
+                                <span style=" font-size: x-large;">Release date: ' . $v1['release_date'] . '</span><br>
+                                <span style=" font-size: x-large;">Artist: ' . $v1['artists'][0]['name'] . '</span><br>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+    if ($response_track) {
+        echo '<h3>Tracks</h3><br>';
+        $html = '';
+        foreach ($response_track as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["album"]["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["album"]["name"] . '</span>
+                                <span style=" font-size: x-large;">Release date: ' . $v1['album']['release_date'] . '</span>
+                                <span style=" font-size: x-large;">Artist: ' . $v1['album']['artists'][0]['name'] . '</span>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+    if ($response_artist) {
+        echo '<h3>Artists</h3><br>';
+        $html = '';
+        foreach ($response_artist as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["name"] . '</span>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+    if ($response_playlist) {
+        echo '<h3>Playlist</h3><br>';
+        $html = '';
+        foreach ($response_playlist as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["name"] . '</span>
+                                <p class="card-title text-muted">by '.$v1['owner']['display_name'].'</p>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+    if ($response_episode) {
+        echo '<h3>Episode</h3><br>';
+        $html = '';
+        foreach ($response_episode as $k => $v) {
+            foreach ($v['items'] as $k1 => $v1) {
+
+                $html .= '<div class="container mt-2 text-dark">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row flex-fill">
+                            <div class="col-sm-5">
+                                <img src=' . $v1["images"][0]["url"] . ' height=200px width=200px>
+                            </div>
+                            <div class="col-sm-4 py-5">
+                                <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["name"] . '</span>
+                            </div>
+                            <div class=" col-sm-3 text-lg-end">
+                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            }
+        }
+        echo $html;
+    }
+
+
+    ?>
+
+
+
+
+
+</body>
+
+</html>
