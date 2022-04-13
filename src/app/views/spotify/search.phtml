@@ -39,8 +39,21 @@
 
 
                         <input type="submit" value="Search" name="search" class="btn btn-primary mt-2">
+
+                    </form>
+
+                    
                 </div>
-                </form>
+                <div class="col-lg-8 col-xl-6">
+                    <form action="/spotify/create" method="POST">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="playlist" placeholder="Playlist Name">
+                            <input type="text" name="playlist_des" placeholder="Playlist Description">
+
+                            <input type="submit" name="add" value="Add">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -124,9 +137,12 @@
                                 <span style=" font-size: x-large;">Release date: ' . $v1['album']['release_date'] . '</span>
                                 <span style=" font-size: x-large;">Artist: ' . $v1['album']['artists'][0]['name'] . '</span>
                             </div>
-                            <div class=" col-sm-3 text-lg-end">
-                                <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
+                            <form action="/spotify/addtoplaylist" method="POST" class="col-sm-3 text-lg-end">
+                            <div>
+                                <input type="submit" name="add" class="btn btn-primary" value="Add To Playlist">
+                                <input type="hidden" name="uri" value='.$v1['uri'].'>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -177,7 +193,7 @@
                             </div>
                             <div class="col-sm-4 py-5">
                                 <span style="font-size: x-large; overflow:auto" >Name: ' . $v1["name"] . '</span>
-                                <p class="card-title text-muted">by '.$v1['owner']['display_name'].'</p>
+                                <p class="card-title text-muted">by ' . $v1['owner']['display_name'] . '</p>
                             </div>
                             <div class=" col-sm-3 text-lg-end">
                                 <a href="#" class="btn btn-primary stretched-link">ADD TO PLAYLIST</a>
